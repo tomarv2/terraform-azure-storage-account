@@ -25,6 +25,7 @@ resource "azurerm_storage_account" "storage_account" {
   tags                               = merge(local.shared_tags)
 
   depends_on = [null_resource.resource_group_setup]
+  enable_https_traffic_only = true
 }
 
 resource "azurerm_storage_container" "container" {
