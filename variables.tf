@@ -39,21 +39,21 @@ variable "account_replication_type" {
 
 variable "storage_account_location" {
   description = "Location of the Storage account"
-  default = "westus"
+  default     = "westus"
 }
 
 variable "storage_account_name" {
-    description = "Storage account name"
-  default = null
+  description = "Storage account name"
+  default     = null
 }
 
 variable "asq_names" {
-  type = list(string)
+  type    = list(string)
   default = []
 }
 
 variable "container_names" {
-  type = list(string)
+  type    = list(string)
   default = []
 }
 
@@ -63,4 +63,24 @@ variable "container_access_type" {
 
 variable "get_sas_token" {
   default = true
+}
+
+variable "network_rules" {
+  default = []
+  type = set(object({
+    default_action             = string
+    ip_rules                   = list(string)
+    virtual_network_subnet_ids = list(string)
+  }))
+}
+
+variable "logging" {
+  //  default = {}
+  type = object({
+    delete                = string
+    retention_policy_days = string
+    read                  = string
+    version               = string
+    write                 = string
+  })
 }
