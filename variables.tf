@@ -18,11 +18,16 @@ variable "client_secret" {}
 
 variable "tenant_id" {}
 
-variable "rg_name" {}
-
-variable "add_storage_account" {
-  default = false
+variable "rg_name" {
+  description = "Resource group name"
 }
+
+variable "deploy_storage_account" {
+  description = "feature flag, true or false"
+  default     = true
+  type        = bool
+}
+
 
 variable "stg_account_tier" {
   default = "Standard"
@@ -34,23 +39,28 @@ variable "account_replication_type" {
 
 variable "storage_account_location" {
   description = "Location of the Storage account"
+  default = "westus"
 }
 
 variable "storage_account_name" {
+    description = "Storage account name"
+  default = null
 }
 
 variable "asq_names" {
   type = list(string)
+  default = []
 }
 
 variable "container_names" {
   type = list(string)
+  default = []
 }
 
 variable "container_access_type" {
   default = "private"
 }
 
-//variable "stg_depends_on" {
-//  default = null
-//}
+variable "get_sas_token" {
+  default = true
+}

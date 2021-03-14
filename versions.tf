@@ -1,5 +1,5 @@
-  # Note: versioning is optional but strongly recommended to pin the version of the Provider
-  terraform {
+# Note: versioning is optional but strongly recommended to pin the version of the Provider
+terraform {
   required_version            = ">= 0.14"
   required_providers {
     azurerm = {

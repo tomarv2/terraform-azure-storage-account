@@ -1,14 +1,36 @@
-[![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-# Azure Storage Account
+<p align="center">
+    <a href="https://github.com/tomarv2/terraform-azure-storage-account/actions/workflows/security_scans.yml" alt="Security Scans">
+        <img src="https://github.com/tomarv2/terraform-azure-storage-account/actions/workflows/security_scans.yml/badge.svg?branch=main" /></a>
+    <a href="https://www.apache.org/licenses/LICENSE-2.0" alt="license">
+        <img src="https://img.shields.io/github/license/tomarv2/terraform-azure-storage-account" /></a>
+    <a href="https://github.com/tomarv2/terraform-azure-storage-account/tags" alt="GitHub tag">
+        <img src="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-storage-account" /></a>
+    <a href="https://github.com/tomarv2/terraform-azure-storage-account/pulse" alt="Activity">
+        <img src="https://img.shields.io/github/commit-activity/m/tomarv2/terraform-azure-storage-account" /></a>
+    <a href="https://stackoverflow.com/users/6679867/tomarv2" alt="Stack Exchange reputation">
+        <img src="https://img.shields.io/stackexchange/stackoverflow/r/6679867"></a>
+    <a href="https://discord.gg/XH975bzN" alt="chat on Discord">
+        <img src="https://img.shields.io/discord/813961944443912223?logo=discord"></a>
+    <a href="https://twitter.com/intent/follow?screen_name=varuntomar2019" alt="follow on Twitter">
+        <img src="https://img.shields.io/twitter/follow/varuntomar2019?style=social&logo=twitter"></a>
+</p>
 
-Terraform to creates Storage Accounts.
+# Terraform module to create [Azure Storage Account](https://registry.terraform.io/modules/tomarv2/storage-account/azure/latest)
+
+####
+
+> :arrow_right:  Terraform module for [AWS S3](https://registry.terraform.io/modules/tomarv2/s3/aws/latest)
+
+> :arrow_right:  Terraform module for [Google Storage](https://registry.terraform.io/modules/tomarv2/storage-bucket/google/latest)
+
 
 ## Versions
 
 - Module tested for Terraform 0.14.
 - Azure provider version [2.48.0](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 - `main` branch: Provider versions not pinned to keep up with Terraform releases
-- `tags` releases: Tags are pinned with versions (use latest tag in your releases)
+- `tags` releases: Tags are pinned with versions (use <a href="https://github.com/tomarv2/terraform-azure-storage-account/tags" alt="GitHub tag">
+        <img src="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-storage-account" /></a> in your releases)
 
 **NOTE:** 
 
@@ -35,60 +57,55 @@ export TF_AZURE_CONTAINER=tfstate # Output of remote_state.sh
 export ARM_ACCESS_KEY=xxxxxxxxxx # Output of remote_state.sh
 ```  
 
-- Update:
-```
-example/custom/sample.tfvars
-```
-
-- Change to: 
-```
-example/base
-``` 
+- Updated `examples` directory to required values.
 
 - Run and verify the output before deploying:
 ```
-tf -cloud aws plan -var-file <path to .tfvars file>
+tf -cloud azure plan
 ```
 
 - Run below to deploy:
 ```
-tf -cloud aws apply -var-file <path to .tfvars file>
+tf -cloud azure apply
 ```
 
 - Run below to destroy:
 ```
-tf -cloud aws destroy -var-file <path to .tfvars file>
+tf -cloud azure destroy
 ```
 
-Please refer to example directory [link](example/README.md) for references.
 
-## Inputs
+> ❗️ **Important** - Two variables are required for using `tf` package:
+>
+> - teamid
+> - prjid
+>
+> These variables are required to set backend path in the remote storage.
+> Variables can be defined using:
+>
+> - As `inline variables` e.g.: `-var='teamid=demo-team' -var='prjid=demo-project'`
+> - Inside `.tfvars` file e.g.: `-var-file=<tfvars file location> `
+>
+> For more information refer to [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html)
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| account\_replication\_type | n/a | `string` | `"GRS"` | no |
-| add\_storage\_account | n/a | `bool` | `false` | no |
-| asq\_names | n/a | `list(string)` | n/a | yes |
-| client\_id | n/a | `any` | n/a | yes |
-| client\_secret | n/a | `any` | n/a | yes |
-| container\_access\_type | n/a | `string` | `"private"` | no |
-| container\_names | n/a | `list(string)` | n/a | yes |
-| email | Email address to be used to for tagging. | `any` | n/a | yes |
-| prjid | Name of the project/stack e.g: mystack, nifieks. Should not be changed after running 'tf apply'. | `any` | n/a | yes |
-| rg\_name | n/a | `any` | n/a | yes |
-| stg\_account\_tier | n/a | `string` | `"Standard"` | no |
-| storage\_account\_location | Location of the Storage account | `any` | n/a | yes |
-| storage\_account\_name | n/a | `any` | `null` | no |
-| subscription\_id | n/a | `any` | n/a | yes |
-| teamid | Name of the team or group e.g. devops, dataengineering. Should not be changed after running 'tf apply'. | `any` | n/a | yes |
-| tenant\_id | n/a | `any` | n/a | yes |
+##### Storage Account with ASQ
 
-## Outputs
+```
+module "storage_account" {
+  source = "../"
 
-| Name | Description |
-|------|-------------|
-| asq\_names | n/a |
-| storage\_account\_location | storage account location. |
-| storage\_account\_name | storage account name. |
-| storage\_account\_primary\_connection\_string | storage account primary connection string. |
-| storage\_container\_names | n/a |
+  email           = "demo@demo.com"
+  rg_name         = "test-rg"
+  asq_names       = ["test1", "test2"]
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  subscription_id = var.subscription_id
+  tenant_id       = var.tenant_id
+  #-----------------------------------------------
+  # Note: Do not change teamid and prjid once set.
+  teamid = var.teamid
+  prjid  = var.prjid
+}
+```
+
+Please refer to examples directory [link](examples) for references.

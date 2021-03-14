@@ -27,10 +27,6 @@ output "asq_names" {
   }
 }
 
-//output "asq_names_list" {
-//  value = azurerm_storage_queue.asq.id
-//}
-
 output "sas_url_query_string" {
-  value = data.azurerm_storage_account_sas.sas_token.sas
+  value = join("", data.azurerm_storage_account_sas.sas_token.*.sas)
 }
