@@ -28,7 +28,6 @@ variable "deploy_storage_account" {
   type        = bool
 }
 
-
 variable "stg_account_tier" {
   default = "Standard"
 }

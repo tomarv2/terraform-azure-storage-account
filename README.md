@@ -88,6 +88,25 @@ tf -cloud azure destroy
 >
 > For more information refer to [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html)
 
+##### Storage Account
+
+```
+module "storage_account" {
+  source = "../"
+
+  email           = "demo@demo.com"
+  rg_name         = "test-rg"
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  subscription_id = var.subscription_id
+  tenant_id       = var.tenant_id
+  #-----------------------------------------------
+  # Note: Do not change teamid and prjid once set.
+  teamid = var.teamid
+  prjid  = var.prjid
+}
+```
+
 ##### Storage Account with ASQ
 
 ```
