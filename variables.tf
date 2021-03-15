@@ -66,7 +66,7 @@ variable "get_sas_token" {
 }
 
 variable "network_rules" {
-  default = []
+  default = null
   type = set(object({
     default_action             = string
     ip_rules                   = list(string)
@@ -74,13 +74,19 @@ variable "network_rules" {
   }))
 }
 
-variable "logging" {
-  //  default = {}
-  type = object({
-    delete                = string
-    retention_policy_days = string
-    read                  = string
-    version               = string
-    write                 = string
-  })
+//variable "queue_properties" {
+////    default = {}
+//  type = set(object({
+//    logging = object({})
+////    delete                = string
+////    retention_policy_days = string
+////    read                  = string
+////    version               = string
+////    write                 = string
+//  }))
+//}
+
+variable "min_tls_version" {
+  description = "The minimum supported TLS version for the storage account. Possible values are TLS1_0, TLS1_1, and TLS1_2. Defaults to TLS1_2 (contrary to AZ default option)"
+  default     = "TLS1_2"
 }

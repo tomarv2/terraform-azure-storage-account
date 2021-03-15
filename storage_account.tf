@@ -6,6 +6,8 @@ resource "azurerm_storage_account" "storage_account" {
   location                 = var.storage_account_location
   account_tier             = var.stg_account_tier
   account_replication_type = var.account_replication_type
+  enable_https_traffic_only = var.enable_https_traffic_only
+  min_tls_version           = var.min_tls_version
 
   dynamic "network_rules" {
     for_each = var.network_rules
@@ -15,20 +17,19 @@ resource "azurerm_storage_account" "storage_account" {
       virtual_network_subnet_ids = network_rules.value["virtual_network_subnet_ids"]
     }
   }
-  enable_https_traffic_only = var.enable_https_traffic_only
-  //  queue_properties {
-  //    dynamic "logging" {
-  //      for_each = var.logging
-  //      content {
-  //        delete                = each.value
-  //        read                  = logging.value["read"]
-  //        retention_policy_days = logging.value["retention_policy_days"]
-  //        version               = logging.value["version"]
-  //        write                 = logging.value["write"]
-  //      }
-  //    }
-  //  }
 
+//  dynamic "queue_properties" {
+//    for_each = var.queue_properties["logging"]
+//    content {
+//      logging {
+//        delete = false
+//        read = false
+//        version = ""
+//        retention_policy_days = queue_properties.value
+//        write = false
+//      }
+//    }
+//  }
 
   tags = merge(local.shared_tags)
 }
