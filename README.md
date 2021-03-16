@@ -94,7 +94,6 @@ tf -cloud azure destroy
 module "storage_account" {
   source = "../"
 
-  email           = "demo@demo.com"
   rg_name         = "test-rg"
   client_id       = var.client_id
   client_secret   = var.client_secret
@@ -113,7 +112,6 @@ module "storage_account" {
 module "storage_account" {
   source = "../"
 
-  email           = "demo@demo.com"
   rg_name         = "test-rg"
   asq_names       = ["test1", "test2"]
   client_id       = var.client_id
