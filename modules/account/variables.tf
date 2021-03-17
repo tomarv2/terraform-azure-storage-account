@@ -42,24 +42,6 @@ variable "storage_account_name" {
   default     = null
 }
 
-variable "asq_names" {
-  type    = list(string)
-  default = []
-}
-
-variable "container_names" {
-  type    = list(string)
-  default = null
-}
-
-variable "blob_name" {
-  default = null
-}
-
-variable "container_access_type" {
-  default = "private"
-}
-
 variable "get_sas_token" {
   default = true
 }
@@ -73,44 +55,11 @@ variable "network_rules" {
   }))
 }
 
-//variable "queue_properties" {
-////    default = {}
-//  type = set(object({
-//    logging = object({})
-////    delete                = string
-////    retention_policy_days = string
-////    read                  = string
-////    version               = string
-////    write                 = string
-//  }))
-//}
-
 variable "min_tls_version" {
   description = "The minimum supported TLS version for the storage account. Possible values are TLS1_0, TLS1_1, and TLS1_2. Defaults to TLS1_2 (contrary to AZ default option)"
   default     = "TLS1_2"
 }
 
-variable "type" {
-  default     = "Block"
-  description = "The type of the storage blob to be created. Possible values are Append, Block or Page. Changing this forces a new resource to be created."
-}
-
-variable "size" {
-  default     = "Block"
-  description = "The type of the storage blob to be created. Possible values are Append, Block or Page. Changing this forces a new resource to be created."
-}
-
-variable "blob_source" {
-  description = "An absolute path to a file on the local system."
-  default     = ""
-}
-
-variable "create_blob" {
-  description = "feature flag, true or false"
-  default     = false
-  type        = bool
-}
-
-variable "container_name_for_blob" {
-  default = ""
+variable "enable_https_traffic_only" {
+  default = true
 }

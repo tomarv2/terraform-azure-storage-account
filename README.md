@@ -27,7 +27,7 @@
 ## Versions
 
 - Module tested for Terraform 0.14.
-- Azure provider version [2.48.0](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
+- Azure provider version [2.50.0](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 - `main` branch: Provider versions not pinned to keep up with Terraform releases
 - `tags` releases: Tags are pinned with versions (use <a href="https://github.com/tomarv2/terraform-azure-storage-account/tags" alt="GitHub tag">
         <img src="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-storage-account" /></a> in your releases)
@@ -91,11 +91,11 @@ tf -cloud azure destroy
 ##### Storage Account
 
 ```
-module "storage_account" {
-  source = "../"
+module "account" {
+  source = "../../modules/account"
 
   rg_name = "test-rg"
-  
+
   client_id       = var.client_id
   client_secret   = var.client_secret
   subscription_id = var.subscription_id
@@ -110,29 +110,60 @@ module "storage_account" {
 ##### Storage Account with ASQ, Container and Blob
 
 ```
-module "storage_account" {
-  source = "../"
+module "account" {
+  source = "../../modules/account"
 
   rg_name = "test-rg"
-  network_rules = [{
-    default_action             = "Deny"
-    ip_rules                   = ["100.0.0.1"]
-    virtual_network_subnet_ids = ["100.0.0.1/24"]
-  }]
+
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  subscription_id = var.subscription_id
+  tenant_id       = var.tenant_id
   #-----------------------------------------------
-  # Create Container
+  # Note: Do not change teamid and prjid once set.
+  teamid = var.teamid
+  prjid  = var.prjid
+}
+
+module "container" {
+  source = "../../modules/container"
+
+  storage_account_name = module.account.storage_account_name
+  container_names = ["test1", "test2"]
+
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  subscription_id = var.subscription_id
+  tenant_id       = var.tenant_id
   #-----------------------------------------------
-  container_names = ["test_container1", "test_container2", "test_container3"]
+  # Note: Do not change teamid and prjid once set.
+  teamid = var.teamid
+  prjid  = var.prjid
+}
+
+module "queue" {
+  source = "../../modules/queue"
+
+  storage_account_name = module.account.storage_account_name
+  asq_names = ["test1-asq", "test2-asq"]
+
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  subscription_id = var.subscription_id
+  tenant_id       = var.tenant_id
   #-----------------------------------------------
-  # Create ASQ
-  #-----------------------------------------------
-  asq_names = ["test_asq1", "test_asq1"]
-  #-----------------------------------------------
-  # Create BLOB
-  #-----------------------------------------------
-  deploy_blob = true
-  blob_name   = "test_blob"
-  blob_source = "<source file location>"
+  # Note: Do not change teamid and prjid once set.
+  teamid = var.teamid
+  prjid  = var.prjid
+}
+
+module "blob" {
+  source = "../../modules/blob"
+
+  storage_account_name = module.account.storage_account_name
+  storage_container_name = "<existing container name>"
+  blob_name = "test-blob"
+  blob_source = "<source file name>"
 
   client_id       = var.client_id
   client_secret   = var.client_secret

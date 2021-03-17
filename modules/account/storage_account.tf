@@ -18,18 +18,5 @@ resource "azurerm_storage_account" "storage_account" {
     }
   }
 
-  //  dynamic "queue_properties" {
-  //    for_each = var.queue_properties["logging"]
-  //    content {
-  //      logging {
-  //        delete = false
-  //        read = false
-  //        version = ""
-  //        retention_policy_days = queue_properties.value
-  //        write = false
-  //      }
-  //    }
-  //  }
-
   tags = merge(local.shared_tags)
 }

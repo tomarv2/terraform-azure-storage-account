@@ -3,7 +3,7 @@ terraform {
   required_version = ">= 0.14"
   required_providers {
     azurerm = {
-      version = "~> 2.48"
+      version = "~> 2.50"
     }
   }
 }
@@ -19,6 +19,3 @@ provider "azurerm" {
 }
 
 
-variable "enable_https_traffic_only" {
-  default = true
-}
