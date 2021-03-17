@@ -94,7 +94,8 @@ tf -cloud azure destroy
 module "storage_account" {
   source = "../"
 
-  rg_name         = "test-rg"
+  rg_name = "test-rg"
+  
   client_id       = var.client_id
   client_secret   = var.client_secret
   subscription_id = var.subscription_id
@@ -106,14 +107,33 @@ module "storage_account" {
 }
 ```
 
-##### Storage Account with ASQ
+##### Storage Account with ASQ, Container and Blob
 
 ```
 module "storage_account" {
   source = "../"
 
-  rg_name         = "test-rg"
-  asq_names       = ["test1", "test2"]
+  rg_name = "test-rg"
+  network_rules = [{
+    default_action             = "Deny"
+    ip_rules                   = ["100.0.0.1"]
+    virtual_network_subnet_ids = ["100.0.0.1/24"]
+  }]
+  #-----------------------------------------------
+  # Create Container
+  #-----------------------------------------------
+  container_names = ["test_container1", "test_container2", "test_container3"]
+  #-----------------------------------------------
+  # Create ASQ
+  #-----------------------------------------------
+  asq_names = ["test_asq1", "test_asq1"]
+  #-----------------------------------------------
+  # Create BLOB
+  #-----------------------------------------------
+  deploy_blob = true
+  blob_name   = "test_blob"
+  blob_source = "<source file location>"
+
   client_id       = var.client_id
   client_secret   = var.client_secret
   subscription_id = var.subscription_id

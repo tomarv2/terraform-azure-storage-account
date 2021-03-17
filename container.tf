@@ -1,5 +1,5 @@
 resource "azurerm_storage_container" "container" {
-  for_each = toset(var.container_names)
+  for_each = toset(local.container_names)
 
   name                  = each.value
   storage_account_name  = lower(local.clean_stg_account_name)

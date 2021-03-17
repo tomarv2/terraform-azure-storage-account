@@ -1,16 +1,16 @@
 output "storage_account_name" {
   description = "storage account name."
-  value       = [azurerm_storage_account.storage_account.*.name]
+  value       = join("", azurerm_storage_account.storage_account.*.name)
 }
 
 output "storage_account_location" {
   description = "storage account location."
-  value       = [azurerm_storage_account.storage_account.*.location]
+  value       = join("", azurerm_storage_account.storage_account.*.location)
 }
 
 output "storage_account_primary_connection_string" {
   description = "storage account primary connection string."
-  value       = [azurerm_storage_account.storage_account.*.primary_blob_connection_string]
+  value       = join("", azurerm_storage_account.storage_account.*.primary_blob_connection_string)
 }
 
 output "storage_container_names" {
@@ -27,6 +27,10 @@ output "asq_names" {
   }
 }
 
-output "sas_url_query_string" {
+output "storage_account_access_key" {
   value = join("", data.azurerm_storage_account_sas.sas_token.*.sas)
+}
+
+output "blob_name" {
+  value = join("", azurerm_storage_blob.default.*.name)
 }

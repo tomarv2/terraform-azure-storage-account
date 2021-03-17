@@ -5,25 +5,25 @@ output "storage_account_name" {
 
 output "storage_account_location" {
   description = "storage account location."
-  value       = [module.storage_account.*.storage_account_location]
+  value       = module.storage_account.storage_account_location
 }
 
 output "storage_account_primary_connection_string" {
   description = "storage account primary connection string."
-  value       = [module.storage_account.*.storage_account_primary_connection_string]
+  value       = module.storage_account.storage_account_primary_connection_string
 }
 
-output "storage_container" {
+output "storage_container_names" {
   description = "storage container name(s)."
-  value       = [module.storage_account.storage_container_names]
+  value       = module.storage_account.storage_container_names
 }
 
 output "asq_name" {
   description = "asq name(s)."
-  value       = [module.storage_account.asq_names]
+  value       = module.storage_account.asq_names
 }
 
-output "sas_url_query_string" {
-  value       = module.storage_account.sas_url_query_string
+output "storage_account_access_key" {
+  value       = module.storage_account.storage_account_access_key
   description = "SAS token"
 }

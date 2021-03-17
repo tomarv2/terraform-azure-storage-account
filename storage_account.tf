@@ -1,11 +1,11 @@
 resource "azurerm_storage_account" "storage_account" {
   count = var.deploy_storage_account ? 1 : 0
 
-  name                     = local.clean_stg_account_name
-  resource_group_name      = var.rg_name
-  location                 = var.storage_account_location
-  account_tier             = var.stg_account_tier
-  account_replication_type = var.account_replication_type
+  name                      = local.clean_stg_account_name
+  resource_group_name       = var.rg_name
+  location                  = var.storage_account_location
+  account_tier              = var.stg_account_tier
+  account_replication_type  = var.account_replication_type
   enable_https_traffic_only = var.enable_https_traffic_only
   min_tls_version           = var.min_tls_version
 
@@ -18,18 +18,18 @@ resource "azurerm_storage_account" "storage_account" {
     }
   }
 
-//  dynamic "queue_properties" {
-//    for_each = var.queue_properties["logging"]
-//    content {
-//      logging {
-//        delete = false
-//        read = false
-//        version = ""
-//        retention_policy_days = queue_properties.value
-//        write = false
-//      }
-//    }
-//  }
+  //  dynamic "queue_properties" {
+  //    for_each = var.queue_properties["logging"]
+  //    content {
+  //      logging {
+  //        delete = false
+  //        read = false
+  //        version = ""
+  //        retention_policy_days = queue_properties.value
+  //        write = false
+  //      }
+  //    }
+  //  }
 
   tags = merge(local.shared_tags)
 }
