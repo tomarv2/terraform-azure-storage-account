@@ -17,12 +17,9 @@
 
 # Terraform module to create [Azure Storage Account](https://registry.terraform.io/modules/tomarv2/storage-account/azure/latest)
 
-####
-
 > :arrow_right:  Terraform module for [AWS S3](https://registry.terraform.io/modules/tomarv2/s3/aws/latest)
 
 > :arrow_right:  Terraform module for [Google Storage](https://registry.terraform.io/modules/tomarv2/storage-bucket/google/latest)
-
 
 ## Versions
 
@@ -61,19 +58,18 @@ export ARM_ACCESS_KEY=xxxxxxxxxx # Output of remote_state.sh
 
 - Run and verify the output before deploying:
 ```
-tf -cloud azure plan
+tf -cloud azure plan -var='teamid=foo' -var='prjid=bar'
 ```
 
 - Run below to deploy:
 ```
-tf -cloud azure apply
+tf -cloud azure apply -var='teamid=foo' -var='prjid=bar'
 ```
 
 - Run below to destroy:
 ```
-tf -cloud azure destroy
+tf -cloud azure destroy -var='teamid=foo' -var='prjid=bar'
 ```
-
 
 > ❗️ **Important** - Two variables are required for using `tf` package:
 >
@@ -88,14 +84,13 @@ tf -cloud azure destroy
 >
 > For more information refer to [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html)
 
-##### Storage Account
+#### Storage Account
 
 ```
-module "account" {
-  source = "../../modules/account"
-
+module "storage_account" {
+  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/account?ref=v0.0.1"
+  
   rg_name = "test-rg"
-
   client_id       = var.client_id
   client_secret   = var.client_secret
   subscription_id = var.subscription_id
@@ -107,14 +102,13 @@ module "account" {
 }
 ```
 
-##### Storage Account with ASQ, Container and Blob
+#### Storage Account with ASQ, Container and Blob
 
 ```
-module "account" {
-  source = "../../modules/account"
+module "storage_account" {
+  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/account?ref=v0.0.1"
 
   rg_name = "test-rg"
-
   client_id       = var.client_id
   client_secret   = var.client_secret
   subscription_id = var.subscription_id
@@ -125,12 +119,11 @@ module "account" {
   prjid  = var.prjid
 }
 
-module "container" {
-  source = "../../modules/container"
+module "storage_container" {
+  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/container?ref=v0.0.1"
 
   storage_account_name = module.account.storage_account_name
   container_names = ["test1", "test2"]
-
   client_id       = var.client_id
   client_secret   = var.client_secret
   subscription_id = var.subscription_id
@@ -141,12 +134,11 @@ module "container" {
   prjid  = var.prjid
 }
 
-module "queue" {
-  source = "../../modules/queue"
+module "storage_queue" {
+  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/queue?ref=v0.0.1"
 
   storage_account_name = module.account.storage_account_name
   asq_names = ["test1-asq", "test2-asq"]
-
   client_id       = var.client_id
   client_secret   = var.client_secret
   subscription_id = var.subscription_id
@@ -157,14 +149,13 @@ module "queue" {
   prjid  = var.prjid
 }
 
-module "blob" {
-  source = "../../modules/blob"
+module "storage_blob" {
+  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/blob?ref=v0.0.1"
 
   storage_account_name = module.account.storage_account_name
   storage_container_name = "<existing container name>"
   blob_name = "test-blob"
   blob_source = "<source file name>"
-
   client_id       = var.client_id
   client_secret   = var.client_secret
   subscription_id = var.subscription_id

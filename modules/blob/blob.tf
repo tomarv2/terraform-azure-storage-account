@@ -1,7 +1,7 @@
 resource "azurerm_storage_blob" "default" {
   count = var.create_blob ? 1 : 0
 
-  name = var.blob_name
+  name                   = var.blob_name
   storage_account_name   = var.storage_account_name
   storage_container_name = var.storage_container_name
   type                   = var.type
