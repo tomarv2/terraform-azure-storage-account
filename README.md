@@ -1,6 +1,6 @@
 <p align="center">
-    <a href="https://github.com/tomarv2/terraform-azure-storage-account/actions/workflows/security_scans.yml" alt="Security Scans">
-        <img src="https://github.com/tomarv2/terraform-azure-storage-account/actions/workflows/security_scans.yml/badge.svg?branch=main" /></a>
+    <a href="https://github.com/tomarv2/terraform-azure-storage-account/actions/workflows/pre-commit.yml" alt="Pre Commit">
+        <img src="https://github.com/tomarv2/terraform-azure-storage-account/actions/workflows/pre-commit.yml/badge.svg?branch=main" /></a>
     <a href="https://www.apache.org/licenses/LICENSE-2.0" alt="license">
         <img src="https://img.shields.io/github/license/tomarv2/terraform-azure-storage-account" /></a>
     <a href="https://github.com/tomarv2/terraform-azure-storage-account/tags" alt="GitHub tag">
@@ -23,28 +23,36 @@
 
 ## Versions
 
-- Module tested for Terraform 0.14.
-- Azure provider version [2.50.0](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
+- Module tested for Terraform 1.0.1.
+- Azure provider version [2.90.0](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 - `main` branch: Provider versions not pinned to keep up with Terraform releases
 - `tags` releases: Tags are pinned with versions (use <a href="https://github.com/tomarv2/terraform-azure-storage-account/tags" alt="GitHub tag">
         <img src="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-storage-account" /></a> in your releases)
 
-**NOTE:** 
-
-- Read more on [tfremote](https://github.com/tomarv2/tfremote)
-
 ## Usage
 
-Recommended method:
+### Option 1:
 
-- Create python 3.6+ virtual environment 
+```
+terrafrom init
+terraform plan -var='teamid=tryme' -var='prjid=project1'
+terraform apply -var='teamid=tryme' -var='prjid=project1'
+terraform destroy -var='teamid=tryme' -var='prjid=project1'
+```
+**Note:** With this option please take care of remote state storage
+
+### Option 2:
+
+#### Recommended method (stores remote state in S3 using `prjid` and `teamid` to create directory structure):
+
+- Create python 3.8+ virtual environment
 ```
 python3 -m venv <venv name>
 ```
 
 - Install package:
 ```
-pip install tfremote
+pip install tfremote --upgrade
 ```
 
 - Set below environment variables:
@@ -52,7 +60,7 @@ pip install tfremote
 export TF_AZURE_STORAGE_ACCOUNT=tfstatexxxxx # Output of remote_state.sh
 export TF_AZURE_CONTAINER=tfstate # Output of remote_state.sh
 export ARM_ACCESS_KEY=xxxxxxxxxx # Output of remote_state.sh
-```  
+```
 
 - Updated `examples` directory to required values.
 
@@ -82,14 +90,17 @@ tf -cloud azure destroy -var='teamid=foo' -var='prjid=bar'
 > - As `inline variables` e.g.: `-var='teamid=demo-team' -var='prjid=demo-project'`
 > - Inside `.tfvars` file e.g.: `-var-file=<tfvars file location> `
 >
-> For more information refer to [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html)
+**NOTE:**
+
+- Read more on [tfremote](https://github.com/tomarv2/tfremote)
+---
 
 #### Storage Account
 
 ```
 module "storage_account" {
-  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/account?ref=v0.0.1"
-  
+  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/account"
+
   rg_name = "test-rg"
   client_id       = var.client_id
   client_secret   = var.client_secret
@@ -106,7 +117,7 @@ module "storage_account" {
 
 ```
 module "storage_account" {
-  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/account?ref=v0.0.1"
+  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/account"
 
   rg_name = "test-rg"
   client_id       = var.client_id
@@ -120,7 +131,7 @@ module "storage_account" {
 }
 
 module "storage_container" {
-  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/container?ref=v0.0.1"
+  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/container"
 
   storage_account_name = module.account.storage_account_name
   container_names = ["test1", "test2"]
@@ -135,7 +146,7 @@ module "storage_container" {
 }
 
 module "storage_queue" {
-  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/queue?ref=v0.0.1"
+  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/queue"
 
   storage_account_name = module.account.storage_account_name
   asq_names = ["test1-asq", "test2-asq"]
@@ -150,7 +161,7 @@ module "storage_queue" {
 }
 
 module "storage_blob" {
-  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/blob?ref=v0.0.1"
+  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/blob"
 
   storage_account_name = module.account.storage_account_name
   storage_container_name = "<existing container name>"

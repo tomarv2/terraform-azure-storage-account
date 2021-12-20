@@ -18,7 +18,7 @@ output "storage_account_primary_connection_string" {
 
 output "storage_account_access_key" {
   value       = module.account.storage_account_access_key
-  description = "SAS token"
+  description = "Storage account access key(SAS token)."
 }
 #-----------------------------------------------
 # Storage Container

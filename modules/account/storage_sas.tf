@@ -35,4 +35,3 @@ data "azurerm_storage_account_sas" "sas_token" {
 
   depends_on = [azurerm_storage_account.storage_account]
 }
-
