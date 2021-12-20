@@ -79,5 +79,10 @@ _testmain.go
 /test/run.out
 /test/times.out
 
-# ignore requried test file(s)
+# ignore test file(s)
 **test**
+examples/*test
+remote_backend.tf
+# Do not ignore files in .github (actions)
+!.github
+
