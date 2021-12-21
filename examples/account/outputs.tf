@@ -14,12 +14,12 @@ output "storage_account_location" {
 output "storage_account_primary_connection_string" {
   description = "Storage account primary connection string."
   value       = module.account.storage_account_primary_connection_string
-    sensitive = true
+  sensitive   = true
 
 }
 
 output "storage_account_access_key" {
   description = "Storage account access key(SAS token)."
   value       = module.account.storage_account_access_key
-  sensitive = true
+  sensitive   = true
 }
