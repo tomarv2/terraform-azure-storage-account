@@ -132,12 +132,12 @@ module "storage_account" {
 module "storage_container" {
   source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/container"
 
-  storage_account_name = module.account.storage_account_name
-  container_names = ["test1", "test2"]
-  client_id       = var.client_id
-  client_secret   = var.client_secret
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
+  storage_account_name  = module.account.storage_account_name
+  container_names       = ["test1", "test2"]
+  client_id             = var.client_id
+  client_secret         = var.client_secret
+  subscription_id       = var.subscription_id
+  tenant_id             = var.tenant_id
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid
@@ -148,11 +148,11 @@ module "storage_queue" {
   source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/queue"
 
   storage_account_name = module.account.storage_account_name
-  asq_names = ["test1-asq", "test2-asq"]
-  client_id       = var.client_id
-  client_secret   = var.client_secret
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
+  asq_names            = ["test1-asq", "test2-asq"]
+  client_id            = var.client_id
+  client_secret        = var.client_secret
+  subscription_id      = var.subscription_id
+  tenant_id            = var.tenant_id
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid
@@ -162,14 +162,14 @@ module "storage_queue" {
 module "storage_blob" {
   source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/blob"
 
-  storage_account_name = module.account.storage_account_name
-  storage_container_name = "<existing container name>"
-  blob_name = "test-blob"
-  blob_source = "<source file name>"
-  client_id       = var.client_id
-  client_secret   = var.client_secret
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
+  storage_account_name      = module.account.storage_account_name
+  storage_container_name    = "<existing container name>"
+  blob_name                 = "test-blob"
+  blob_source               = "<source file name>"
+  client_id                 = var.client_id
+  client_secret             = var.client_secret
+  subscription_id           = var.subscription_id
+  tenant_id                 = var.tenant_id
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid
