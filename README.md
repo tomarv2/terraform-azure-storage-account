@@ -79,20 +79,19 @@ tf -cloud azure apply -var='teamid=foo' -var='prjid=bar'
 tf -cloud azure destroy -var='teamid=foo' -var='prjid=bar'
 ```
 
-> ❗️ **Important** - Two variables are required for using `tf` package:
->
-> - teamid
-> - prjid
->
-> These variables are required to set backend path in the remote storage.
-> Variables can be defined using:
->
-> - As `inline variables` e.g.: `-var='teamid=demo-team' -var='prjid=demo-project'`
-> - Inside `.tfvars` file e.g.: `-var-file=<tfvars file location> `
->
 **NOTE:**
 
 - Read more on [tfremote](https://github.com/tomarv2/tfremote)
+
+### [Authenticate with Azure](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
+
+Terraform supports a number of different methods for authenticating to Azure:
+
+- Authenticating to Azure using the Azure CLI
+- Authenticating to Azure using Managed Service Identity
+- Authenticating to Azure using a Service Principal and a Client Certificate
+- Authenticating to Azure using a Service Principal and a Client Secret
+
 ---
 
 #### Storage Account
@@ -101,7 +100,7 @@ tf -cloud azure destroy -var='teamid=foo' -var='prjid=bar'
 module "storage_account" {
   source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/account"
 
-  rg_name = "test-rg"
+  rg_name         = ""<existing_resource_group_name>""
   client_id       = var.client_id
   client_secret   = var.client_secret
   subscription_id = var.subscription_id
@@ -119,7 +118,7 @@ module "storage_account" {
 module "storage_account" {
   source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/account"
 
-  rg_name = "test-rg"
+  rg_name         = "<storage_account_name>"
   client_id       = var.client_id
   client_secret   = var.client_secret
   subscription_id = var.subscription_id
