@@ -9,8 +9,7 @@
         <img src="https://img.shields.io/github/commit-activity/m/tomarv2/terraform-azure-storage-account" /></a>
     <a href="https://stackoverflow.com/users/6679867/tomarv2" alt="Stack Exchange reputation">
         <img src="https://img.shields.io/stackexchange/stackoverflow/r/6679867"></a>
-    <a href="https://discord.gg/XH975bzN" alt="chat on Discord">
-        <img src="https://img.shields.io/discord/813961944443912223?logo=discord"></a>
+
     <a href="https://twitter.com/intent/follow?screen_name=varuntomar2019" alt="follow on Twitter">
         <img src="https://img.shields.io/twitter/follow/varuntomar2019?style=social&logo=twitter"></a>
 </p>
@@ -101,10 +100,7 @@ module "storage_account" {
   source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/account"
 
   rg_name         = ""<existing_resource_group_name>""
-  client_id       = var.client_id
-  client_secret   = var.client_secret
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
+
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid
@@ -119,10 +115,7 @@ module "storage_account" {
   source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/account"
 
   rg_name         = "<storage_account_name>"
-  client_id       = var.client_id
-  client_secret   = var.client_secret
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
+
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid
@@ -149,10 +142,7 @@ module "storage_queue" {
 
   storage_account_name = module.account.storage_account_name
   asq_names            = ["test1-asq", "test2-asq"]
-  client_id            = var.client_id
-  client_secret        = var.client_secret
-  subscription_id      = var.subscription_id
-  tenant_id            = var.tenant_id
+
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid
