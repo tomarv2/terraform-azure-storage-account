@@ -9,7 +9,7 @@ variable "prjid" {
 }
 
 variable "resource_group_name" {
-  description = "The name of the azure storage account(A container that holds related resources)"
+  description = "The name of the Resource group"
   type        = string
 }
 
@@ -31,7 +31,7 @@ variable "account_replication_type" {
   type        = string
 }
 
-variable "storage_account_location" {
+variable "location" {
   description = "The location/region for storage account. To get the list of all locations with table format from azure cli, run 'az account list-locations -o table'"
   default     = "westus"
   type        = string
@@ -75,4 +75,12 @@ variable "extra_tags" {
   description = "Additional tags to associate"
   type        = map(string)
   default     = {}
+}
+
+# change to -> sha256(resourceGroupName+subscription_id)[:8])
+resource "random_string" "string" {
+  length  = 3
+  special = false
+  lower   = true
+  upper   = false
 }
