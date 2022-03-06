@@ -98,7 +98,7 @@ Terraform supports a number of different methods for authenticating to Azure:
 module "storage_account" {
   source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/account"
 
-  rg_name         = ""<existing_resource_group_name>""
+  resource_group_name         = ""<existing_resource_group_name>""
 
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
@@ -113,7 +113,7 @@ module "storage_account" {
 module "storage_account" {
   source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/account"
 
-  rg_name         = "<storage_account_name>"
+  resource_group_name         = "<storage_account_name>"
 
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.

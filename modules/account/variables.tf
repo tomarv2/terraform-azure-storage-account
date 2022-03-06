@@ -8,33 +8,13 @@ variable "prjid" {
   type        = string
 }
 
-variable "subscription_id" {
-  description = "Azure subscription Id"
-  type        = string
-}
-
-variable "client_id" {
-  description = "Azure client Id"
-  type        = string
-}
-
-variable "client_secret" {
-  description = "Azure client secret"
-  type        = string
-}
-
-variable "tenant_id" {
-  description = "Azure tenant Id"
-  type        = string
-}
-
-variable "rg_name" {
+variable "resource_group_name" {
   description = "The name of the azure storage account(A container that holds related resources)"
   type        = string
 }
 
 variable "deploy_storage_account" {
-  description = "feature flag, true or false"
+  description = "Feature flag, true or false"
   default     = true
   type        = bool
 }
@@ -89,4 +69,10 @@ variable "enable_https_traffic_only" {
   description = "Boolean flag which forces HTTPS if enabled, see here for more information. Defaults to true."
   default     = true
   type        = bool
+}
+
+variable "extra_tags" {
+  description = "Additional tags to associate"
+  type        = map(string)
+  default     = {}
 }

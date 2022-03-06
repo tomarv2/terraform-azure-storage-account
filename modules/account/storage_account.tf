@@ -2,7 +2,7 @@ resource "azurerm_storage_account" "storage_account" {
   count = var.deploy_storage_account ? 1 : 0
 
   name                      = local.clean_stg_account_name
-  resource_group_name       = var.rg_name
+  resource_group_name       = var.resource_group_name
   location                  = var.storage_account_location
   account_tier              = var.stg_account_tier
   account_replication_type  = var.account_replication_type
@@ -18,5 +18,5 @@ resource "azurerm_storage_account" "storage_account" {
     }
   }
 
-  tags = merge(local.shared_tags)
+  tags = merge(local.shared_tags, var.extra_tags)
 }

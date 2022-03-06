@@ -1,7 +1,7 @@
 module "account" {
   source = "../../modules/account"
 
-  rg_name = "<existing_resource_group_name>"
+  resource_group_name = "<existing_resource_group_name>"
 
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
@@ -40,10 +40,6 @@ module "blob" {
   storage_container_name = "test1"
   blob_name              = "test-blob"
   blob_source            = "test.text"
-  client_id              = var.client_id
-  client_secret          = var.client_secret
-  subscription_id        = var.subscription_id
-  tenant_id              = var.tenant_id
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid
