@@ -1,40 +1,20 @@
 variable "teamid" {
-  description = "(Required) Name of the team/group e.g. devops, dataengineering. Should not be changed after running 'tf apply'"
+  description = "Name of the team/group e.g. devops, dataengineering. Should not be changed after running 'tf apply'"
   type        = string
 }
 
 variable "prjid" {
-  description = "(Required) Name of the project/stack e.g: mystack, nifieks, demoaci. Should not be changed after running 'tf apply'"
+  description = "Name of the project/stack e.g: mystack, nifieks, demoaci. Should not be changed after running 'tf apply'"
   type        = string
 }
 
-variable "subscription_id" {
-  description = "Azure subscription Id"
-  type        = string
-}
-
-variable "client_id" {
-  description = "Azure client Id"
-  type        = string
-}
-
-variable "client_secret" {
-  description = "Azure client secret"
-  type        = string
-}
-
-variable "tenant_id" {
-  description = "Azure tenant Id"
-  type        = string
-}
-
-variable "rg_name" {
-  description = "The name of the azure storage account(A container that holds related resources)"
+variable "resource_group_name" {
+  description = "The name of the Resource group"
   type        = string
 }
 
 variable "deploy_storage_account" {
-  description = "feature flag, true or false"
+  description = "Feature flag, true or false"
   default     = true
   type        = bool
 }
@@ -51,7 +31,7 @@ variable "account_replication_type" {
   type        = string
 }
 
-variable "storage_account_location" {
+variable "location" {
   description = "The location/region for storage account. To get the list of all locations with table format from azure cli, run 'az account list-locations -o table'"
   default     = "westus"
   type        = string
@@ -64,7 +44,7 @@ variable "storage_account_name" {
 }
 
 variable "get_sas_token" {
-  description = "feature flag, true or false"
+  description = "Feature flag, true or false"
   default     = true
   type        = bool
 }
@@ -89,4 +69,18 @@ variable "enable_https_traffic_only" {
   description = "Boolean flag which forces HTTPS if enabled, see here for more information. Defaults to true."
   default     = true
   type        = bool
+}
+
+variable "extra_tags" {
+  description = "Additional tags to associate"
+  type        = map(string)
+  default     = {}
+}
+
+# change to -> sha256(resourceGroupName+subscription_id)[:8])
+resource "random_string" "string" {
+  length  = 3
+  special = false
+  lower   = true
+  upper   = false
 }

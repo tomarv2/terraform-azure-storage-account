@@ -1,11 +1,20 @@
+terraform {
+  required_version = ">= 1.0.1"
+  required_providers {
+    azurerm = {
+      version = "~> 2.98"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+}
+
 module "account" {
   source = "../../modules/account"
 
-  rg_name         = "<existing_rg_name>"
-  client_id       = var.client_id
-  client_secret   = var.client_secret
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
+  resource_group_name = "security-terraform"
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid

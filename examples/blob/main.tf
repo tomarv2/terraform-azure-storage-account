@@ -1,3 +1,16 @@
+terraform {
+  required_version = ">= 1.0.1"
+  required_providers {
+    azurerm = {
+      version = "~> 2.98"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+}
+
 module "blob" {
   source = "../../modules/blob"
 
@@ -5,12 +18,4 @@ module "blob" {
   storage_container_name = "test2"
   blob_name              = "test2-blob"
   blob_source            = "/tmp/<sample_file>"
-  client_id              = var.client_id
-  client_secret          = var.client_secret
-  subscription_id        = var.subscription_id
-  tenant_id              = var.tenant_id
-  #-----------------------------------------------
-  # Note: Do not change teamid and prjid once set.
-  teamid = var.teamid
-  prjid  = var.prjid
 }

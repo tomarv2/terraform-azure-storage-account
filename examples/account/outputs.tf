@@ -1,14 +1,11 @@
-#-----------------------------------------------
-# Storage Account
-#-----------------------------------------------
 output "storage_account_name" {
   description = "The name of the azure storage account."
   value       = module.account.storage_account_name
 }
 
-output "storage_account_location" {
+output "location" {
   description = "Storage account location."
-  value       = module.account.storage_account_location
+  value       = module.account.location
 }
 
 output "storage_account_primary_connection_string" {

@@ -9,13 +9,11 @@
         <img src="https://img.shields.io/github/commit-activity/m/tomarv2/terraform-azure-storage-account" /></a>
     <a href="https://stackoverflow.com/users/6679867/tomarv2" alt="Stack Exchange reputation">
         <img src="https://img.shields.io/stackexchange/stackoverflow/r/6679867"></a>
-    <a href="https://discord.gg/XH975bzN" alt="chat on Discord">
-        <img src="https://img.shields.io/discord/813961944443912223?logo=discord"></a>
     <a href="https://twitter.com/intent/follow?screen_name=varuntomar2019" alt="follow on Twitter">
         <img src="https://img.shields.io/twitter/follow/varuntomar2019?style=social&logo=twitter"></a>
 </p>
 
-# Terraform module to create [Azure Storage Account](https://registry.terraform.io/modules/tomarv2/storage-account/azure/latest)
+# Terraform module for [Azure Storage Account](https://registry.terraform.io/modules/tomarv2/storage-account/azure/latest)
 
 > :arrow_right:  Terraform module for [AWS S3](https://registry.terraform.io/modules/tomarv2/s3/aws/latest)
 
@@ -24,7 +22,7 @@
 ## Versions
 
 - Module tested for Terraform 1.0.1.
-- Azure provider version [2.90.0](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
+- Azure provider version [2.98](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 - `main` branch: Provider versions not pinned to keep up with Terraform releases
 - `tags` releases: Tags are pinned with versions (use <a href="https://github.com/tomarv2/terraform-azure-storage-account/tags" alt="GitHub tag">
         <img src="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-storage-account" /></a> in your releases)
@@ -92,19 +90,26 @@ Terraform supports a number of different methods for authenticating to Azure:
 - Authenticating to Azure using a Service Principal and a Client Certificate
 - Authenticating to Azure using a Service Principal and a Client Secret
 
----
-
 #### Storage Account
 
 ```
-module "storage_account" {
-  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/account"
+terraform {
+  required_version = ">= 1.0.1"
+  required_providers {
+    azurerm = {
+      version = "~> 2.98"
+    }
+  }
+}
 
-  rg_name         = ""<existing_resource_group_name>""
-  client_id       = var.client_id
-  client_secret   = var.client_secret
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
+provider "azurerm" {
+  features {}
+}
+
+module "account" {
+  source = "../../modules/account"
+
+  resource_group_name = "security-terraform"
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid
@@ -115,61 +120,58 @@ module "storage_account" {
 #### Storage Account with ASQ, Container and Blob
 
 ```
-module "storage_account" {
-  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/account"
+terraform {
+  required_version = ">= 1.0.1"
+  required_providers {
+    azurerm = {
+      version = "~> 2.98"
+    }
+  }
+}
 
-  rg_name         = "<storage_account_name>"
-  client_id       = var.client_id
-  client_secret   = var.client_secret
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
+provider "azurerm" {
+  features {}
+}
+
+module "account" {
+  source = "../../modules/account"
+
+  resource_group_name = "<existing_resource_group_name>"
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid
   prjid  = var.prjid
 }
 
-module "storage_container" {
-  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/container"
+module "container" {
+  source = "../../modules/container"
 
-  storage_account_name  = module.account.storage_account_name
-  container_names       = ["test1", "test2"]
-  client_id             = var.client_id
-  client_secret         = var.client_secret
-  subscription_id       = var.subscription_id
-  tenant_id             = var.tenant_id
+  storage_account_name = module.account.storage_account_name
+  container_names      = ["test1", "test2"]
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid
   prjid  = var.prjid
 }
 
-module "storage_queue" {
-  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/queue"
+module "queue" {
+  source = "../../modules/queue"
 
   storage_account_name = module.account.storage_account_name
   asq_names            = ["test1-asq", "test2-asq"]
-  client_id            = var.client_id
-  client_secret        = var.client_secret
-  subscription_id      = var.subscription_id
-  tenant_id            = var.tenant_id
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid
   prjid  = var.prjid
 }
 
-module "storage_blob" {
-  source = "git::git@github.com:tomarv2/terraform-azure-storage-account.git//modules/blob"
+module "blob" {
+  source = "../../modules/blob"
 
-  storage_account_name      = module.account.storage_account_name
-  storage_container_name    = "<existing container name>"
-  blob_name                 = "test-blob"
-  blob_source               = "<source file name>"
-  client_id                 = var.client_id
-  client_secret             = var.client_secret
-  subscription_id           = var.subscription_id
-  tenant_id                 = var.tenant_id
+  storage_account_name   = module.account.storage_account_name
+  storage_container_name = "test1"
+  blob_name              = "test-blob"
+  blob_source            = "test.text"
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid

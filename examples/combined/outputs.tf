@@ -6,9 +6,9 @@ output "storage_account_name" {
   value       = module.account.storage_account_name
 }
 
-output "storage_account_location" {
+output "location" {
   description = "storage account location."
-  value       = module.account.storage_account_location
+  value       = module.account.location
 }
 
 output "storage_account_primary_connection_string" {
