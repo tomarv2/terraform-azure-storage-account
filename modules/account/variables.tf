@@ -44,7 +44,7 @@ variable "storage_account_name" {
 }
 
 variable "get_sas_token" {
-  description = "feature flag, true or false"
+  description = "Feature flag, true or false"
   default     = true
   type        = bool
 }

@@ -22,7 +22,7 @@ variable "blob_source" {
 }
 
 variable "create_blob" {
-  description = "feature flag, true or false"
+  description = "Feature flag, true or false"
   default     = true
   type        = bool
 }
