@@ -2,7 +2,7 @@ terraform {
   required_version = ">= 1.0.1"
   required_providers {
     azurerm = {
-      version = "~> 2.98"
+      version = "~> 3.21.1"
     }
   }
 }
@@ -14,9 +14,13 @@ provider "azurerm" {
 module "account" {
   source = "../../modules/account"
 
-  resource_group_name = "security-terraform"
-  #-----------------------------------------------
-  # Note: Do not change teamid and prjid once set.
+  storage_accounts_config = {
+    "securitydevsecuritybv8t" = {
+      resource_group  = "<resource_group_name>"
+      location        = "westus2"
+      min_tls_version = "TLS1_0"
+    }
+  }
   teamid = var.teamid
   prjid  = var.prjid
 }

@@ -1,7 +1,7 @@
 data "azurerm_storage_account_sas" "sas_token" {
-  count = var.get_sas_token ? 1 : 0
+  for_each = azurerm_storage_account.storage_account
 
-  connection_string = azurerm_storage_account.storage_account.*.primary_connection_string[0]
+  connection_string = each.value.primary_connection_string
 
   https_only     = true
   signed_version = "2019-12-12"
@@ -15,8 +15,8 @@ data "azurerm_storage_account_sas" "sas_token" {
   services {
     blob  = true
     queue = true
-    table = true
-    file  = true
+    table = false
+    file  = false
   }
 
   start  = "2020-10-02"
@@ -31,6 +31,8 @@ data "azurerm_storage_account_sas" "sas_token" {
     create  = true
     update  = true
     process = false
+    tag     = false
+    filter  = false
   }
 
   depends_on = [azurerm_storage_account.storage_account]

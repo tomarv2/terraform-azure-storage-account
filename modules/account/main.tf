@@ -1,13 +1,15 @@
 resource "azurerm_storage_account" "storage_account" {
-  count = var.deploy_storage_account ? 1 : 0
+  for_each = var.storage_accounts_config != null ? var.storage_accounts_config : {}
 
-  name                      = local.clean_stg_account_name
-  resource_group_name       = var.resource_group_name
-  location                  = var.location
-  account_tier              = var.stg_account_tier
-  account_replication_type  = var.account_replication_type
-  enable_https_traffic_only = var.enable_https_traffic_only
-  min_tls_version           = var.min_tls_version
+  name                             = each.key
+  resource_group_name              = each.value.resource_group
+  location                         = try(each.value.location, "westus2")
+  account_tier                     = try(each.value.account_tier, "Standard")
+  account_replication_type         = try(each.value.account_replication_type, "GRS")
+  enable_https_traffic_only        = try(each.value.enable_https_traffic_only, true)
+  min_tls_version                  = try(each.value.min_tls_version, "TLS1_2")
+  allow_nested_items_to_be_public  = try(each.value.allow_nested_items_to_be_public, false)
+  cross_tenant_replication_enabled = try(each.value.cross_tenant_replication_enabled, true)
 
   dynamic "network_rules" {
     for_each = var.network_rules
@@ -18,5 +20,12 @@ resource "azurerm_storage_account" "storage_account" {
     }
   }
 
+  dynamic "identity" {
+    for_each = var.managed_identity_type != null ? [1] : []
+    content {
+      type         = var.managed_identity_type
+      identity_ids = var.managed_identity_type == "UserAssigned" || var.managed_identity_type == "SystemAssigned, UserAssigned" ? var.managed_identity_ids : null
+    }
+  }
   tags = merge(local.shared_tags, var.extra_tags)
 }
