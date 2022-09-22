@@ -14,9 +14,11 @@ provider "azurerm" {
 module "queue" {
   source = "../../modules/queue"
 
-  storage_account_name = "<existing_storage_account_name>"
-  asq_names            = ["test3-asq", "test4-asq"]
-
+  queues_config = {
+    demo_queue_name = {
+      storage_account_name = "<demo_storage_account_name>"
+    }
+  }
   #-----------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid

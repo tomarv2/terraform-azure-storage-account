@@ -15,11 +15,11 @@ module "container" {
   source = "../../modules/container"
 
   storage_containers_config = {
-    c7n-aci-logs = {
+    demo1 = {
       storage_account_name = "<storage_account_name>"
       container_access_type = "private"
     }
-    c7n-aci-policies = {
+    demo2 = {
       storage_account_name = "<storage_account_name>"
       container_access_type = "private"
     }

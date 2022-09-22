@@ -5,7 +5,7 @@ resource "azurerm_storage_blob" "default" {
   storage_account_name   = each.value.account_name
   storage_container_name = each.value.container_name
   type                   = coalesce(each.value.storage_container_name, "Block")
-  source                 = each.value.blob_source
+  source                 = each.value.source
 
   # NOTE: noticed that if blob does not exist or is deleted, terraform destroy was failing
   # adding this to ignore changes
