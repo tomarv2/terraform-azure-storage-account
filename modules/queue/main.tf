@@ -1,6 +1,7 @@
 resource "azurerm_storage_queue" "asq" {
-  for_each = toset(var.asq_names)
+  for_each = var.queues_config != null ? var.queues_config : {}
 
-  name                 = each.value
-  storage_account_name = var.storage_account_name
+  name                 = each.key
+  storage_account_name = each.value.storage_account_name
 }
+

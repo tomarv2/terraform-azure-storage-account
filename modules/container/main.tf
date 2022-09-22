@@ -1,7 +1,7 @@
 resource "azurerm_storage_container" "container" {
-  for_each = toset(local.container_names)
+  for_each = var.storage_containers_config !=null ? var.storage_containers_config : {}
 
-  name                  = each.value
-  storage_account_name  = var.storage_account_name
-  container_access_type = var.container_access_type
+  name                  = each.key
+  storage_account_name  = each.value.storage_account_name
+  container_access_type = coalesce(each.value.container_access_type, "private")
 }

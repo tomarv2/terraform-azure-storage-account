@@ -1,4 +1,4 @@
-output "blob_name" {
-  description = "The name of the azure storage blob"
+output "name" {
+  description = "Blob names"
   value       = join("", azurerm_storage_blob.default.*.name)
 }

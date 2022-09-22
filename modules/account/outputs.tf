@@ -1,19 +1,24 @@
-output "storage_account_name" {
+output "name" {
   description = "The name of the azure storage account."
-  value       = join("", azurerm_storage_account.storage_account.*.name)
+  value       = [for stg in azurerm_storage_account.storage_account : stg.name]
 }
 
 output "location" {
   description = "Storage account location."
-  value       = join("", azurerm_storage_account.storage_account.*.location)
+  value       = [for stg in azurerm_storage_account.storage_account : stg.location]
 }
 
-output "storage_account_primary_connection_string" {
+output "primary_connection_string" {
   description = "Storage account primary connection string."
-  value       = join("", azurerm_storage_account.storage_account.*.primary_blob_connection_string)
+  value       = [for stg in azurerm_storage_account.storage_account : stg.primary_connection_string]
 }
 
-output "storage_account_access_key" {
+output "access_key" {
   description = "Storage account access key(SAS token)."
-  value       = join("", data.azurerm_storage_account_sas.sas_token.*.sas)
+  value       = [for token in data.azurerm_storage_account_sas.sas_token : token.sas]
+}
+
+output "id" {
+  description = "The ID of the Storage Account."
+  value       = [for stg in azurerm_storage_account.storage_account : stg.id]
 }
