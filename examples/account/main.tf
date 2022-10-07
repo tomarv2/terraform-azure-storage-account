@@ -15,8 +15,8 @@ module "account" {
   source = "../../modules/account"
 
   storage_accounts_config = {
-    "securitydevsecuritybv8t" = {
-      resource_group  = "cloud-custodian"
+    "demostorageaccount" = {
+      resource_group  = "<resource_group_name>"
       location        = "westus2"
       min_tls_version = "TLS1_0"
     }
