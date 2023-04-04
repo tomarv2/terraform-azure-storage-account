@@ -16,15 +16,12 @@ module "container" {
 
   storage_containers_config = {
     demo1 = {
-      storage_account_name = "<storage_account_name>"
+      storage_account_name  = "<storage_account_name>"
       container_access_type = "private"
     }
     demo2 = {
-      storage_account_name = "<storage_account_name>"
+      storage_account_name  = "<storage_account_name>"
       container_access_type = "private"
     }
   }
-
-  teamid               = var.teamid
-  prjid                = var.prjid
 }

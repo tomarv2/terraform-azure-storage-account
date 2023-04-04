@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "storage_account" {
-  for_each = var.storage_accounts_config != null ? var.storage_accounts_config : {}
+  for_each = var.storage_accounts_config
 
   name                             = each.key
   resource_group_name              = each.value.resource_group

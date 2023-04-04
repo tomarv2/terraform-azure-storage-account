@@ -12,13 +12,13 @@ provider "azurerm" {
 }
 
 module "blob" {
-  source       = "../../modules/blob"
+  source = "../../modules/blob"
   blobs_config = {
     demo_blob = {
       storage_account_name   = "<storage_account_name>"
       storage_container_name = "test2"
-      type              = "test2-blob"
-      source            = "/tmp/<sample_file>"
+      type                   = "test2-blob"
+      source                 = "/tmp/<sample_file>"
     }
   }
 }
