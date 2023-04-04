@@ -19,8 +19,4 @@ module "queue" {
       storage_account_name = "<demo_storage_account_name>"
     }
   }
-  #-----------------------------------------------
-  # Note: Do not change teamid and prjid once set.
-  teamid = var.teamid
-  prjid  = var.prjid
 }

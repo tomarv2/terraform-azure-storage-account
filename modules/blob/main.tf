@@ -1,5 +1,5 @@
 resource "azurerm_storage_blob" "default" {
-  for_each = var.blobs_config !=null ? var.blobs_config : {}
+  for_each = var.blobs_config
 
   name                   = each.key
   storage_account_name   = each.value.account_name

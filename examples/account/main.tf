@@ -21,6 +21,4 @@ module "account" {
       min_tls_version = "TLS1_0"
     }
   }
-  teamid = var.teamid
-  prjid  = var.prjid
 }
